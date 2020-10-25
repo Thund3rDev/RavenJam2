@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 78787616}
   - component: {fileID: 78787615}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Button_Shoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 971344493}
   - component: {fileID: 971344492}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Button_R_AntiHorary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -969,7 +969,7 @@ GameObject:
   - component: {fileID: 1758932614}
   - component: {fileID: 1758932613}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button_R_Horary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1366,7 +1366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCenter: {fileID: 567852518}
   moveSpeed: 100
-  movementAngle: 180
+  movementAngle: 120
   playerShoots: {fileID: 1129506173}
   bulletPrefab: {fileID: 2305197349388753771, guid: 5f44df8e76b21434a87e785dd2075089,
     type: 3}
@@ -1453,8 +1453,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1883635776}
+  - component: {fileID: 1883635777}
   m_Layer: 0
-  m_Name: Center
+  m_Name: Center/Circumference
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1475,6 +1476,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1883635777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883635775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4cc293fbd49284b8096fc46fd318c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextChange: 5
+  changeInterval: 5
+  rotateSpeed: 10
+  horaryRotate: 0
+  isStarting: 1
 --- !u!1 &2026586923
 GameObject:
   m_ObjectHideFlags: 0

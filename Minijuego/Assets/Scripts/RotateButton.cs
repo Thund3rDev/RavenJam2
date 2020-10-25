@@ -1,18 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class RotateButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public int id = 0;
-    public bool isPressed = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private int id = 0;
+    private bool isPressed = false;
 
     // Update is called once per frame
     void Update()
