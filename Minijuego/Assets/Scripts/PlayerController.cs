@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     // Singleton
     public static PlayerController instance;
 
+    [Header("Movement")]
     [SerializeField]
     private GameObject playerCenter;
     [SerializeField]
@@ -15,6 +16,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject[] limiters;
 
+    [Header("Health")]
+    [SerializeField]
+    private int maxHP = 5;
+    [SerializeField]
+    private int currentHP;
+
+    [Header("Shooting")]
     [SerializeField]
     private GameObject playerShoots;
     [SerializeField]
@@ -27,11 +35,15 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Singleton
         instance = this;
 
         // Limiters
         limiters[0].transform.rotation = Quaternion.Euler(0, 0, (movementAngle / 2) + 6);
         limiters[1].transform.rotation = Quaternion.Euler(0, 0, -(movementAngle / 2) - 6);
+
+        // Health
+        currentHP = maxHP;
     }
 
     #region Movement
