@@ -2,14 +2,14 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     // Singleton
-    public static PlayerController instance;
+    public static EnemyController instance;
 
     [Header("Movement")]
     [SerializeField]
-    private GameObject playerCenter;
+    private GameObject enemyCenter;
     [SerializeField]
     private float moveSpeed = 100.0f;
     [SerializeField]
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Shooting")]
     [SerializeField]
-    private GameObject playerShoots;
+    private GameObject enemyShoots;
     [SerializeField]
     private GameObject bulletPrefab;
 
@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour
         instance = this;
 
         // Limiters
-        limiters[0].transform.rotation = Quaternion.Euler(0, 0, (movementAngle / 2) + 6);
-        limiters[1].transform.rotation = Quaternion.Euler(0, 0, -(movementAngle / 2) - 6);
+        limiters[0].transform.rotation = Quaternion.Euler(0, 0, (movementAngle / 2) + 6 + 180);
+        limiters[1].transform.rotation = Quaternion.Euler(0, 0, -(movementAngle / 2) - 6 - 180);
 
         // Health
         currentHP = maxHP;
@@ -52,28 +52,28 @@ public class PlayerController : MonoBehaviour
     #region Movement
     public void RotateHorary()
     {
-        float eulerZ = playerCenter.transform.localEulerAngles.z;
+        float eulerZ = enemyCenter.transform.localEulerAngles.z;
         float realMovement = moveSpeed * Time.deltaTime;
 
         if ((eulerZ >= (360 - (movementAngle / 2))) || (eulerZ <= (movementAngle / 2)))
         {
             if (((eulerZ - realMovement) >= (360 - (movementAngle / 2))) || ((eulerZ >= 0) && (eulerZ <= (movementAngle / 2))))
             {
-                playerCenter.transform.Rotate(new Vector3(0, 0, -realMovement));
+                enemyCenter.transform.Rotate(new Vector3(0, 0, -realMovement));
             }
         }
     }
 
     public void RotateAntiHorary()
     {
-        float eulerZ = playerCenter.transform.localEulerAngles.z;
+        float eulerZ = enemyCenter.transform.localEulerAngles.z;
         float realMovement = moveSpeed * Time.deltaTime;
 
         if ((eulerZ >= (360 - (movementAngle / 2))) || (eulerZ <= (movementAngle / 2)))
         {
             if (((eulerZ + realMovement) <= (movementAngle / 2)) || (eulerZ >= (360 - (movementAngle / 2))))
             {
-                playerCenter.transform.Rotate(new Vector3(0, 0, realMovement));
+                enemyCenter.transform.Rotate(new Vector3(0, 0, realMovement));
             }
         }
     }
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         if (bulletsCount > 0)
         {
-            Instantiate(bulletPrefab, this.transform.position, this.transform.rotation, playerShoots.transform);
+            Instantiate(bulletPrefab, this.transform.position, this.transform.rotation, enemyShoots.transform);
             bulletsCount--;
             UpdateBulletsText();
         }
@@ -120,12 +120,16 @@ public class PlayerController : MonoBehaviour
             bulletsCount += 5;
             UpdateBulletsText();
             Destroy(collision.gameObject);
-        } else if (collision.CompareTag("Bullet"))
+        }
+        else if (collision.CompareTag("Bullet"))
         {
-            if (collision.transform.parent.name == "PlayerShots")
+            if (collision.transform.parent.name == "EnemyShots")
                 return;
             else
+            {
                 TakeDamage(20);
+                Destroy(collision.gameObject);
+            }
         }
     }
 
@@ -135,8 +139,8 @@ public class PlayerController : MonoBehaviour
     private void OnValidate()
     {
         // Limiters
-        limiters[0].transform.rotation = Quaternion.Euler(0, 0, (movementAngle / 2) + 6);
-        limiters[1].transform.rotation = Quaternion.Euler(0, 0, -(movementAngle / 2) - 6);
+        limiters[0].transform.rotation = Quaternion.Euler(0, 0, (movementAngle / 2) + 6 + 180);
+        limiters[1].transform.rotation = Quaternion.Euler(0, 0, -(movementAngle / 2) - 6 - 180);
     }
     #endregion
 }

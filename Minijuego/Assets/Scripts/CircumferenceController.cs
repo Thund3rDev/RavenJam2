@@ -12,8 +12,6 @@ public class CircumferenceController : MonoBehaviour
     private float rotateSpeed = 10.0f;
     private bool horaryRotate;
 
-    private bool isStarting = true;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -28,14 +26,8 @@ public class CircumferenceController : MonoBehaviour
         {
             horaryRotate = !horaryRotate;
             nextChange = Time.time + Random.Range(minChangeInterval, maxChangeInterval);
-            rotateSpeed *= 1.2f;
-
-            if (isStarting)
-                isStarting = false;
+            rotateSpeed *= 1.1f;
         }
-
-        if (isStarting)
-            return;
 
         if (horaryRotate)
             this.transform.Rotate(new Vector3(0, 0, rotateSpeed) * Time.deltaTime);
