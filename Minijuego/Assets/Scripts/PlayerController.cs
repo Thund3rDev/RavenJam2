@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 100.0f;
     [SerializeField]
     private float movementAngle = 180.0f;
+    [SerializeField]
+    private GameObject[] limiters;
 
     [SerializeField]
     private GameObject playerShoots;
@@ -18,11 +21,17 @@ public class PlayerController : MonoBehaviour
     private GameObject bulletPrefab;
 
     private int bulletsCount = 5;
+    [SerializeField]
+    private TextMeshProUGUI bulletsText;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+
+        // Limiters
+        limiters[0].transform.rotation = Quaternion.Euler(0, 0, (movementAngle / 2) + 6);
+        limiters[1].transform.rotation = Quaternion.Euler(0, 0, -(movementAngle / 2) - 6);
     }
 
     #region Movement
@@ -63,7 +72,37 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(bulletPrefab, this.transform.position, this.transform.rotation, playerShoots.transform);
             bulletsCount--;
+            UpdateBulletsText();
         }
+    }
+    #endregion
+
+    #region various functions
+    private void UpdateBulletsText()
+    {
+        bulletsText.text = "Bullets: " + bulletsCount + "x";
+    }
+    #endregion
+
+    #region triggers
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("BulletPackage"))
+        {
+            bulletsCount += 5;
+            UpdateBulletsText();
+            Destroy(collision.gameObject);
+        }
+    }
+
+    #endregion
+
+    #region editor
+    private void OnValidate()
+    {
+        // Limiters
+        limiters[0].transform.rotation = Quaternion.Euler(0, 0, (movementAngle / 2) + 6);
+        limiters[1].transform.rotation = Quaternion.Euler(0, 0, -(movementAngle / 2) - 6);
     }
     #endregion
 }
